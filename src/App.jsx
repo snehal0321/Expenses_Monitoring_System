@@ -1,7 +1,5 @@
-import Errormodule from './components/Errormodule.jsx';
 import Expenses from './components/Expenses.jsx';
 import './App.css';
-import expenses from './data/expenses.js';
 
 function App() { 
 
