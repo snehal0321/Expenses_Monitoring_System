@@ -24,3 +24,15 @@
   font-size: 1.5rem;
   font-weight: bold;
 }
+
+/* 🟢 Responsive */
+@media (max-width: 600px) {
+  .expense-date {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+
+  .expense-date__day {
+    font-size: 1.2rem;
+  }
+}
