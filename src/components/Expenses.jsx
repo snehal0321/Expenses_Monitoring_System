@@ -2,7 +2,7 @@ import { useEffect,useState } from 'react';
 import ExpenseItem from './ExpenseItem.jsx';
 import './Expenses.css';
 import ExpensesFilter from './ExpensesFilter.jsx';
-import ErrorModule from './Errormodule.jsx';
+import ErrorModule from './ErrorModule.jsx';
 import InputModule from './InputModel.jsx';
 import expensesData   from '../data/expenses.js';
 
