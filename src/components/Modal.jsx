@@ -1,6 +1,6 @@
 import  { createPortal } from 'react-dom';
 import { useEffect, useRef } from 'react';
-import './ErrorModule.css';
+import './Model.css';
 
 function Model({onClose, open ,children}) {  
     const dialogRef = useRef(null); 
