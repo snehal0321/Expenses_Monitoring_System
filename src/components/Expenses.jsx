@@ -57,7 +57,7 @@ function Expenses() {
       console.log('Updated expenses:', expenses);
     }, [expenses]);
 
-  
+  const Totalamount = filteredItems.reduce((total, item) => total + parseFloat(item.amount), 0);
 
 
   return (
@@ -84,6 +84,10 @@ function Expenses() {
           
         ))
       }
+      <div className="item__price">
+        <h3>Total Expense in {selectedYear} :</h3>
+        <h3>₹{Totalamount.toFixed(2)}</h3>
+      </div>
       <button onClick={() => setShowInputBox(true)}>Add Expense</button>
       {showInputBox && (<InputModule
           open={showInputBox}
@@ -96,6 +100,7 @@ function Expenses() {
           <input  id="date" type="date" /><br/>  
         </InputModule>  
       )}
+      
 
     </div>
   );

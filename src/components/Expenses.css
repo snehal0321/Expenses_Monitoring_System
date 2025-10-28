@@ -14,3 +14,15 @@
   font-size: 1.5rem;
   margin-top: 2rem;
 }
+
+.item__price {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #40005d;
+  border: 1px solid white;
+  padding: 0.5rem;
+  border-radius: 12px;
+}
