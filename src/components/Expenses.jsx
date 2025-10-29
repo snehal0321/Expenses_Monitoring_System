@@ -61,13 +61,9 @@ function Expenses() {
   }
 
   function handleDelete(id) {
-    // Logic to save the new expense
-    console.log(id);
     const ExpenseData = expenses.filter((item) => item.id !== id);
     setExpenses(ExpenseData);
-    console.log('Expense Deteled!');
   }
-
 
   useEffect(() => {
       console.log('Updated expenses:', expenses);

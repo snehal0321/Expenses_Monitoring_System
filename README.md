@@ -39,3 +39,13 @@ npm start
 2. Fill in expense details (title, amount, date)
 3. View expenses filtered by year
 4. Monitor spending patterns through the visual chart
+
+## Demo
+For demo click the link below 
+https://expensemonitering.netlify.app/
+
+## Developer
+
+### Snehal Mashelkar
+
+

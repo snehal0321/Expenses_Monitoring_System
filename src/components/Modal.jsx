@@ -15,8 +15,6 @@ function Model({onClose, open ,children, mode}) {
         }
     }, [open]);
 
-    console.log(mode);
-
     return createPortal(
         <>
             <div className='dialog-backdrop'>
