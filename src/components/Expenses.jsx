@@ -8,7 +8,7 @@ import expensesData   from '../data/expenses.js';
 
 function Expenses() {
 
-    const [selectedYear ,setSelectedYear] = useState('2020');
+    const [selectedYear ,setSelectedYear] = useState(expensesData[0].date.toLocaleString('default', { month: 'long' }));
     const [showDialog, setShowDialog] = useState(false);
     const [showInputBox, setShowInputBox] = useState(false);
     const [expenses, setExpenses] = useState(expensesData);
@@ -21,7 +21,7 @@ function Expenses() {
     }
 
   const filteredItems = items.filter(
-    (item) => item.date.getFullYear().toString() === selectedYear
+    (item) => item.date.toLocaleString('default', { month: 'long' }) === selectedYear
   );
 
   useEffect(() => {
@@ -95,7 +95,7 @@ function Expenses() {
           message={error}
           open={showDialog}
           onClose={() => {setShowDialog(false)
-            setSelectedYear(expenses[0].date.getFullYear().toString());
+            setSelectedYear(expenses[0].date.toLocaleString('default', { month: 'long' }));
           }
           }
         />
@@ -115,8 +115,6 @@ function Expenses() {
         <h3>Total Expense in {selectedYear} :</h3>
         <h3>₹{Totalamount.toFixed(2)}</h3>
       </div>
-      
-      
 
     </div>
   );

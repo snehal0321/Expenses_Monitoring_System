@@ -9,7 +9,7 @@ const ExpensesFilter = ({selected,selectedYear, expensesData}) => {
             selectedYear(year);
     }
 
-    const expenseYears = expensesData.map((expense) => expense.date.getFullYear());
+    const expenseYears = expensesData.map((expense) => expense.date.toLocaleString('default', { month: 'long' }));
     const uniqueYears = [...new Set(expenseYears)];
 
   return (
