@@ -2,7 +2,7 @@ import  { createPortal } from 'react-dom';
 import { useEffect, useRef } from 'react';
 import './Model.css';
 
-function Model({onClose, open ,children}) {  
+function Model({onClose, open ,children, mode}) {  
     const dialogRef = useRef(null); 
 
 
@@ -15,6 +15,7 @@ function Model({onClose, open ,children}) {
         }
     }, [open]);
 
+    console.log(mode);
 
     return createPortal(
         <>
@@ -30,7 +31,7 @@ function Model({onClose, open ,children}) {
                 </dialog>
             </div>
         </>,
-        document.getElementById('error-root')
+        document.getElementById(`${mode}`)
     );
 }   
 

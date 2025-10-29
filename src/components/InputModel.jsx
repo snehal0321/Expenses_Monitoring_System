@@ -6,6 +6,7 @@ function InputModal({children,onClose, open, onSave}) {
         <Modal 
             onClose={onClose} 
             open={open} 
+            mode={'modal-root'}
             > 
                 {children}
                 <button onClick={onSave}>Save</button>    

@@ -12,6 +12,7 @@ function Expenses() {
     const [showDialog, setShowDialog] = useState(false);
     const [showInputBox, setShowInputBox] = useState(false);
     const [expenses, setExpenses] = useState(expensesData);
+    const [error, setError] = useState('');  
 
     const items = expenses;
 
@@ -26,13 +27,28 @@ function Expenses() {
   useEffect(() => {
     if (filteredItems.length === 0) {
       setShowDialog(true);
+      setError(`No items found for ${selectedYear}.`);
     } else {
-      setShowDialog(false);
+      // setShowDialog(false);
+      // setError('');
     }
   }, [filteredItems]); 
 
   function handleSave() {
     // Logic to save the new expense
+    try   {
+      if(document.getElementById('Title').value === ''){
+        throw new Error('Title fields are required!');}
+      if(document.getElementById('Amount').value === ''){
+        throw new Error('Amount fields are required!');}
+      if(document.getElementById('date').value === ''){
+        throw new Error('Date fields are required!');
+      }
+    } catch (error) {
+      setShowDialog(true);
+      setError(error.message);
+      return;
+    }
     const ExpenseData = {
       id: Math.random().toString(),
       title: document.getElementById('Title').value,
@@ -62,10 +78,25 @@ function Expenses() {
 
   return (
     <div className="expenses">
+      <button onClick={() => setShowInputBox(true)}>Add Expense</button>
+      
+      {showInputBox && (<InputModule
+          open={showInputBox}
+          onClose={() => setShowInputBox(false)}
+          onSave={handleSave}
+        >
+          <h2>Input Expense Details Here</h2>
+          <input  id="Title" type="text" placeholder="Title" /><br/>
+          <input  id="Amount" type="number" placeholder="Amount" /><br/>
+          <input  id="date" type="date" /><br/>  
+        </InputModule>  
+      )}
+
       <ExpensesFilter selected={selectedYear} selectedYear={handleYearChange} expensesData={expenses} />
        {showDialog && (
         <ErrorModule
-          message={`No items found for ${selectedYear}.`}
+          // message={`No items found for ${selectedYear}.`}
+          message={error}
           open={showDialog}
           onClose={() => {setShowDialog(false)
             setSelectedYear(expenses[0].date.getFullYear().toString());
@@ -88,18 +119,7 @@ function Expenses() {
         <h3>Total Expense in {selectedYear} :</h3>
         <h3>₹{Totalamount.toFixed(2)}</h3>
       </div>
-      <button onClick={() => setShowInputBox(true)}>Add Expense</button>
-      {showInputBox && (<InputModule
-          open={showInputBox}
-          onClose={() => setShowInputBox(false)}
-          onSave={handleSave}
-        >
-          <h2>Input Expense Details Here</h2>
-          <input  id="Title" type="text" placeholder="Title" /><br/>
-          <input  id="Amount" type="number" placeholder="Amount" /><br/>
-          <input  id="date" type="date" /><br/>  
-        </InputModule>  
-      )}
+      
       
 
     </div>
