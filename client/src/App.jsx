@@ -1,13 +1,12 @@
-import Expenses from './components/Expenses.jsx';
-import './App.css';
-import reactLogo from './assets/FullLogo.png';
+import Expenses from "./components/Expenses.jsx";
+import "./App.css";
+import reactLogo from "./client/assets/FullLogo.png";
 
-function App() { 
-
+function App() {
   return (
     <>
       <div>
-        <img src={reactLogo} alt="React Logo" className='logo' width="100" />
+        <img src={reactLogo} alt="React Logo" className="logo" width="100" />
         <Expenses />
       </div>
     </>
