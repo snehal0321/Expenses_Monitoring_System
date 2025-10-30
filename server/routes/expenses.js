@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 });
 
 // POST a new expense
-router.post("/", async (req, res) => {
+router.post("/save", async (req, res) => {
   try {
     const { title, amount, date } = req.body;
 

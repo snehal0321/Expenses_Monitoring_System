@@ -19,7 +19,9 @@ function Expenses() {
 
   const fetchExpenses = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/expenses");
+      const response = await fetch(
+        "https://expenses-monitoring-system-1.onrender.com/api/expenses/"
+      );
       const data = await response.json();
       const processedData = data.map((item) => ({
         ...item,
