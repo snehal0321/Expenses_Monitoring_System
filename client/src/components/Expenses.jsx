@@ -34,7 +34,7 @@ function Expenses() {
     }
   }, [filteredItems]); 
 
-  function handleSave() {
+  async function handleSave() {
     // Logic to save the new expense
     try   {
       if(document.getElementById('Title').value === ''){
@@ -55,9 +55,21 @@ function Expenses() {
       amount: document.getElementById('Amount').value,
       date: new Date(document.getElementById('date').value)
     };
-    setExpenses(pervExpenses => [...pervExpenses,ExpenseData]);
-    console.log('Expense saved!');
-    setShowInputBox(false);
+     setExpenses(pervExpenses => [...pervExpenses,ExpenseData]);
+    // console.log('Expense saved!');
+     const response = await fetch('http://localhost:8080/api/expenses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(ExpenseData)
+      });
+      const data = await response.json();
+      console.log('Saved:', data);
+      setShowInputBox(false);
+              
+        return response.data;
+       
   }
 
   function handleDelete(id) {
