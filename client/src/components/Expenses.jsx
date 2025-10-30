@@ -57,11 +57,11 @@ function Expenses() {
     };
      setExpenses(pervExpenses => [...pervExpenses,ExpenseData]);
     // console.log('Expense saved!');
-     const response = await fetch('http://localhost:8080/api/expenses', {
+     const response = await fetch('https://expenses-monitoring-system-1.onrender.com/api/expenses', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-        },
+        },  
         body: JSON.stringify(ExpenseData)
       });
       const data = await response.json();
