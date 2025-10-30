@@ -192,7 +192,7 @@ function Expenses() {
               title={item.title}
               amount={item.amount}
               date={item.date}
-              onDelete={() => handleDelete(item.id)}
+              onDelete={() => handleDelete(item._id)}
             />
           )
         )
