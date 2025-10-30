@@ -1,27 +1,53 @@
-import { useEffect,useState } from 'react';    
-import ExpenseItem from './ExpenseItem.jsx';
-import './Expenses.css';
-import ExpensesFilter from './ExpensesFilter.jsx';
-import ErrorModule from './ErrorModule.jsx';
-import InputModule from './InputModel.jsx';
-import expensesData   from '../data/expenses.js';
+import { useEffect, useState } from "react";
+import ExpenseItem from "./ExpenseItem.jsx";
+import "./Expenses.css";
+import ExpensesFilter from "./ExpensesFilter.jsx";
+import ErrorModule from "./ErrorModule.jsx";
+import InputModule from "./InputModel.jsx";
+import expensesData from "../data/expenses.js";
+import { set } from "mongoose";
 
 function Expenses() {
+  const [expenses, setExpenses] = useState([]);
+  const [showDialog, setShowDialog] = useState(false);
+  const [showInputBox, setShowInputBox] = useState(false);
+  const [error, setError] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
-    const [selectedYear ,setSelectedYear] = useState(expensesData[0].date.toLocaleString('default', { month: 'long' }));
-    const [showDialog, setShowDialog] = useState(false);
-    const [showInputBox, setShowInputBox] = useState(false);
-    const [expenses, setExpenses] = useState(expensesData);
-    const [error, setError] = useState('');  
+  const items = expenses;
 
-    const items = expenses;
+  const fetchExpenses = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/expenses");
+      const data = await response.json();
+      const processedData = data.map((item) => ({
+        ...item,
+        date: new Date(item.date),
+      }));
+      setSelectedYear(
+        processedData[0].date.toLocaleString("default", { month: "long" })
+      );
+      setExpenses(processedData);
+      setIsLoading(false);
 
-    function handleYearChange(year){
-        setSelectedYear(year);
+      console.log("Fetched expenses:", data);
+    } catch (error) {
+      console.error("Error fetching expenses:", error);
     }
+  };
+
+  useEffect(() => {
+    fetchExpenses();
+  }, []);
+
+  function handleYearChange(year) {
+    setSelectedYear(year);
+  }
 
   const filteredItems = items.filter(
-    (item) => item.date.toLocaleString('default', { month: 'long' }) === selectedYear
+    (item) =>
+      item.date.toLocaleString("default", { month: "long" }) === selectedYear
   );
 
   useEffect(() => {
@@ -30,19 +56,21 @@ function Expenses() {
       setError(`No items found for ${selectedYear}.`);
     } else {
       // setShowDialog(false);
-      // setError('');
+      //  setError('');
     }
-  }, [filteredItems]); 
+  }, [filteredItems]);
 
   async function handleSave() {
     // Logic to save the new expense
-    try   {
-      if(document.getElementById('Title').value === ''){
-        throw new Error('Title fields are required!');}
-      if(document.getElementById('Amount').value === ''){
-        throw new Error('Amount fields are required!');}
-      if(document.getElementById('date').value === ''){
-        throw new Error('Date fields are required!');
+    try {
+      if (document.getElementById("Title").value === "") {
+        throw new Error("Title fields are required!");
+      }
+      if (document.getElementById("Amount").value === "") {
+        throw new Error("Amount fields are required!");
+      }
+      if (document.getElementById("date").value === "") {
+        throw new Error("Date fields are required!");
       }
     } catch (error) {
       setShowDialog(true);
@@ -51,86 +79,128 @@ function Expenses() {
     }
     const ExpenseData = {
       id: Math.random().toString(),
-      title: document.getElementById('Title').value,
-      amount: document.getElementById('Amount').value,
-      date: new Date(document.getElementById('date').value)
+      title: document.getElementById("Title").value,
+      amount: document.getElementById("Amount").value,
+      date: new Date(document.getElementById("date").value),
     };
-     setExpenses(pervExpenses => [...pervExpenses,ExpenseData]);
+    setExpenses((pervExpenses) => [...pervExpenses, ExpenseData]);
     // console.log('Expense saved!');
-     const response = await fetch('https://expenses-monitoring-system-1.onrender.com/api/expenses', {
-        method: 'POST',
+    const response = await fetch(
+      "https://expenses-monitoring-system-1.onrender.com/api/expenses/save",
+      {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
-        },  
-        body: JSON.stringify(ExpenseData)
-      });
-      const data = await response.json();
-      console.log('Saved:', data);
-      setShowInputBox(false);
-              
-        return response.data;
-       
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(ExpenseData),
+      }
+    );
+    const data = await response.json();
+    console.log("Saved:", data);
+    setShowInputBox(false);
+    fetchExpenses();
+
+    return response.data;
   }
 
-  function handleDelete(id) {
-    const ExpenseData = expenses.filter((item) => item.id !== id);
-    setExpenses(ExpenseData);
+  async function handleDelete(id) {
+    try {
+      const response = await fetch(
+        `https://expenses-monitoring-system-1.onrender.com/api/expenses/${id}`,
+        {
+          method: "DELETE", // ✅ correct method
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete expense");
+      }
+
+      const data = await response.json();
+      console.log("Deleted:", data);
+
+      // ✅ Refresh the list after delete
+      fetchExpenses();
+
+      return data;
+    } catch (error) {
+      console.error("Error deleting expense:", error);
+    }
   }
 
   useEffect(() => {
-      console.log('Updated expenses:', expenses);
-    }, [expenses]);
+    console.log("Updated expenses:", expenses);
+  }, [expenses]);
 
-  const Totalamount = filteredItems.reduce((total, item) => total + parseFloat(item.amount), 0);
+  const Totalamount = filteredItems.reduce(
+    (total, item) => total + parseFloat(item.amount),
+    0
+  );
 
-
+  if (isLoading) {
+    return <div>Loading....</div>;
+  }
   return (
     <div className="expenses">
       <button onClick={() => setShowInputBox(true)}>Add Expense</button>
-      
-      {showInputBox && (<InputModule
+
+      {showInputBox && (
+        <InputModule
           open={showInputBox}
           onClose={() => setShowInputBox(false)}
           onSave={handleSave}
         >
           <h2>Input Expense Details Here</h2>
-          <input  id="Title" type="text" placeholder="Title" /><br/>
-          <input  id="Amount" type="number" placeholder="Amount" /><br/>
-          <input  id="date" type="date" /><br/>  
-        </InputModule>  
+          <input id="Title" type="text" placeholder="Title" />
+          <br />
+          <input id="Amount" type="number" placeholder="Amount" />
+          <br />
+          <input id="date" type="date" />
+          <br />
+        </InputModule>
       )}
 
-      <ExpensesFilter selected={selectedYear} selectedYear={handleYearChange} expensesData={expenses} />
-       {showDialog && (
+      <ExpensesFilter
+        selected={selectedYear}
+        selectedYear={handleYearChange}
+        expensesData={expenses}
+      />
+      {showDialog && isLoading && (
         <ErrorModule
           // message={`No items found for ${selectedYear}.`}
           message={error}
           open={showDialog}
-          onClose={() => {setShowDialog(false)
-            setSelectedYear(expenses[0].date.toLocaleString('default', { month: 'long' }));
-          }
-          }
+          onClose={() => {
+            setShowDialog(false);
+            setSelectedYear(
+              expenses[0].date.toLocaleString("default", { month: "long" })
+            );
+          }}
         />
       )}
-      {filteredItems.map((item) => (
-          <ExpenseItem
-            key={item.id}
-            title={item.title}
-            amount={item.amount}
-            date={item.date}
-            onDelete= {() => handleDelete(item.id)}
-          />
-          
-        ))
-      }
+      {filteredItems.map(
+        (item) => (
+          (item.date = new Date(item.date)),
+          (
+            <ExpenseItem
+              key={item._id}
+              title={item.title}
+              amount={item.amount}
+              date={item.date}
+              onDelete={() => handleDelete(item.id)}
+            />
+          )
+        )
+      )}
       <div className="item__price">
         <h3>Total Expense in {selectedYear} :</h3>
         <h3>₹{Totalamount.toFixed(2)}</h3>
       </div>
-
     </div>
   );
- 
 }
 
 export default Expenses;
