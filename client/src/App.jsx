@@ -1,6 +1,6 @@
 import Expenses from "./components/Expenses.jsx";
 import "./App.css";
-import reactLogo from "./client/assets/FullLogo.png";
+import reactLogo from "./assets/FullLogo.png";
 
 function App() {
   return (
