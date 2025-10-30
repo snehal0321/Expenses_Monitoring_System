@@ -39,7 +39,7 @@ router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const deletedExpense = await Product.findByIdAndDelete(id);
+    const deletedExpense = await Expense.findByIdAndDelete(id);
 
     if (!deletedExpense) {
       return res.status(404).json({ message: "Expense not found" });
