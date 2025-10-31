@@ -31,7 +31,7 @@ function Cluster({ SelectedCluster }) {
     SelectedCluster(clusterType);
   };
 
-  function handleAdd({ SelectedCluster }) {
+  function handleAdd() {
     setShowInputBox(true);
   }
   async function handleSave() {
@@ -53,6 +53,9 @@ function Cluster({ SelectedCluster }) {
       }
     );
     const data = await response.json();
+    console.log("Saved:", data);
+    setShowInputBox(false);
+    fetchCluster();
   }
 
   return (

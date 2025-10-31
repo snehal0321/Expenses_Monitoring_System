@@ -80,10 +80,10 @@ function Expenses({ ClusterType }) {
       return;
     }
     const ExpenseData = {
-      id: Math.random().toString(),
       title: document.getElementById("Title").value,
       amount: document.getElementById("Amount").value,
       date: new Date(document.getElementById("date").value),
+      cluster: ClusterType,
     };
     setExpenses((pervExpenses) => [...pervExpenses, ExpenseData]);
     // console.log('Expense saved!');

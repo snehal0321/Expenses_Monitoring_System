@@ -17,9 +17,9 @@ router.get("/", async (req, res) => {
 // POST a new expense
 router.post("/save", async (req, res) => {
   try {
-    const { title, amount, date } = req.body;
+    const { title, amount, date, cluster } = req.body;
 
-    if (!title || !amount || !date) {
+    if (!title || !amount || !date || !cluster) {
       return res.status(400).json({ error: "All fields are required" });
     }
 
@@ -27,6 +27,7 @@ router.post("/save", async (req, res) => {
       title,
       amount,
       date: new Date(date),
+      cluster,
     });
 
     const savedExpense = await newExpense.save();
