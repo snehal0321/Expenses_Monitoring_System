@@ -5,7 +5,7 @@ import ExpensesFilter from "./ExpensesFilter.jsx";
 import ErrorModule from "./ErrorModule.jsx";
 import InputModule from "./InputModel.jsx";
 
-function Expenses() {
+function Expenses({ ClusterType }) {
   const [expenses, setExpenses] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
   const [showInputBox, setShowInputBox] = useState(false);
@@ -148,8 +148,9 @@ function Expenses() {
   }
   return (
     <div className="expenses">
+      <h1>{ClusterType}</h1>
       <button onClick={() => setShowInputBox(true)}>Add Expense</button>
-
+      <div className="balance-display">Balance: $0.00</div>
       {showInputBox && (
         <InputModule
           open={showInputBox}

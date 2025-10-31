@@ -1,5 +1,6 @@
 import express from "express";
 import Expense from "../models/Expense.js";
+import Cluster from "../models/Cluster.js";
 
 const router = express.Router();
 
@@ -49,6 +50,35 @@ router.delete("/:id", async (req, res) => {
   } catch (error) {
     console.error("Error deleting expense:", error);
     res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.post("/cluster/save", async (req, res) => {
+  try {
+    const { title, balance } = req.body;
+
+    if (!title || !balance) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const newCluster = new Cluster({
+      title,
+      balance,
+    });
+
+    const savedCluster = await newCluster.save();
+    res.status(201).json(savedCluster);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to add expense" });
+  }
+});
+
+router.get("/cluster", async (req, res) => {
+  try {
+    const cluster = await Cluster.find().sort({ balance: -1 });
+    res.json(cluster);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch expenses" });
   }
 });
 
