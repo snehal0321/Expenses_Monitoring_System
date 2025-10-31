@@ -4,8 +4,6 @@ import "./Expenses.css";
 import ExpensesFilter from "./ExpensesFilter.jsx";
 import ErrorModule from "./ErrorModule.jsx";
 import InputModule from "./InputModel.jsx";
-import expensesData from "../data/expenses.js";
-import { set } from "mongoose";
 
 function Expenses() {
   const [expenses, setExpenses] = useState([]);
@@ -53,8 +51,10 @@ function Expenses() {
   );
 
   useEffect(() => {
+    if (isLoading) return;
     if (filteredItems.length === 0) {
       setShowDialog(true);
+      console.log("No items found for", selectedYear);
       setError(`No items found for ${selectedYear}.`);
     } else {
       // setShowDialog(false);
@@ -143,6 +143,7 @@ function Expenses() {
   );
 
   if (isLoading) {
+    // setShowDialog(false);
     return <div>Loading....</div>;
   }
   return (
@@ -170,7 +171,7 @@ function Expenses() {
         selectedYear={handleYearChange}
         expensesData={expenses}
       />
-      {showDialog && isLoading && (
+      {showDialog && (
         <ErrorModule
           // message={`No items found for ${selectedYear}.`}
           message={error}
