@@ -6,9 +6,9 @@ const router = express.Router();
 
 // GET all expenses
 router.get("/:clustertype", async (req, res) => {
-  const { clusterType } = req.params;
+  const { clustertype } = req.params;
   try {
-    const expenses = await Expense.find({ cluster: clusterType }).sort({
+    const expenses = await Expense.find({ cluster: clustertype }).sort({
       date: -1,
     });
     res.json(expenses);

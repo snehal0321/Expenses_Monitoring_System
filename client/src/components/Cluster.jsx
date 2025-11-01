@@ -6,6 +6,7 @@ import { useState } from "react";
 function Cluster({ SelectedCluster }) {
   const [showInputBox, setShowInputBox] = useState(false);
   const [cluster, setCluster] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchCluster = async () => {
     try {
@@ -56,6 +57,10 @@ function Cluster({ SelectedCluster }) {
     console.log("Saved:", data);
     setShowInputBox(false);
     fetchCluster();
+  }
+
+  if (isLoading) {
+    return <div>Loading clusters...</div>;
   }
 
   return (

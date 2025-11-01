@@ -15,6 +15,8 @@ function Expenses({ ClusterType }) {
 
   const items = expenses;
 
+  console.log("ClusterType in Expenses:", ClusterType);
+
   const fetchExpenses = async () => {
     try {
       const response = await fetch(
@@ -143,10 +145,10 @@ function Expenses({ ClusterType }) {
   );
   const balance = ClusterType.balance - Totalamount;
 
-  if (isLoading) {
-    // setShowDialog(false);
-    return <div>Loading....</div>;
-  }
+  // if (isLoading) {
+  //   // setShowDialog(false);
+  //   return <div>Loading....</div>;
+  // }
   return (
     <div className="expenses">
       <h1>{ClusterType}</h1>
