@@ -78,7 +78,7 @@ function Cluster({ SelectedCluster }) {
           {cluster.map((clusterItem) => (
             <li
               className="cluster-item"
-              onClick={() => handleClusterClick(clusterItem.title)}
+              onClick={() => handleClusterClick(clusterItem)}
             >
               {clusterItem.title}
             </li>

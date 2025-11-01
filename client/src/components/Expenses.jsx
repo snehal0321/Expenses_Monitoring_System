@@ -18,7 +18,7 @@ function Expenses({ ClusterType }) {
   const fetchExpenses = async () => {
     try {
       const response = await fetch(
-        "https://expenses-monitoring-system-1.onrender.com/api/expenses/"
+        `https://expenses-monitoring-system-1.onrender.com/api/expenses/${ClusterType.title}`
       );
       const data = await response.json();
       const processedData = data.map((item) => ({
@@ -141,6 +141,7 @@ function Expenses({ ClusterType }) {
     (total, item) => total + parseFloat(item.amount),
     0
   );
+  const balance = ClusterType.balance - Totalamount;
 
   if (isLoading) {
     // setShowDialog(false);
@@ -150,7 +151,7 @@ function Expenses({ ClusterType }) {
     <div className="expenses">
       <h1>{ClusterType}</h1>
       <button onClick={() => setShowInputBox(true)}>Add Expense</button>
-      <div className="balance-display">Balance: $0.00</div>
+      <div className="balance-display">Balance: {balance}</div>
       {showInputBox && (
         <InputModule
           open={showInputBox}

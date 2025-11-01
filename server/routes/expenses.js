@@ -5,9 +5,12 @@ import Cluster from "../models/Cluster.js";
 const router = express.Router();
 
 // GET all expenses
-router.get("/", async (req, res) => {
+router.get("/:clustertype", async (req, res) => {
+  const { clusterType } = req.params;
   try {
-    const expenses = await Expense.find().sort({ date: -1 });
+    const expenses = await Expense.find({ cluster: clusterType }).sort({
+      date: -1,
+    });
     res.json(expenses);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch expenses" });
