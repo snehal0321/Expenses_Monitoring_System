@@ -77,7 +77,7 @@ router.post("/cluster/save", async (req, res) => {
   }
 });
 
-router.get("/cluster", async (req, res) => {
+router.get("/cluster/find", async (req, res) => {
   try {
     const cluster = await Cluster.find().sort({ balance: -1 });
     res.json(cluster);

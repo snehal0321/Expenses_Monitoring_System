@@ -10,7 +10,7 @@ function Cluster({ SelectedCluster }) {
   const fetchCluster = async () => {
     try {
       const response = await fetch(
-        "https://expenses-monitoring-system-1.onrender.com/api/expenses/cluster/"
+        "https://expenses-monitoring-system-1.onrender.com/api/expenses/cluster/find"
       );
       const data = await response.json();
       setCluster(data);
@@ -77,6 +77,7 @@ function Cluster({ SelectedCluster }) {
         <ul className="cluster-list">
           {cluster.map((clusterItem) => (
             <li
+              key={clusterItem._id}
               className="cluster-item"
               onClick={() => handleClusterClick(clusterItem)}
             >
