@@ -15,21 +15,27 @@ function Expenses({ ClusterType }) {
 
   const items = expenses;
 
-  console.log("ClusterType in Expenses:", ClusterType);
+  console.log("ClusterType in Expenses:", ClusterType.title);
 
   const fetchExpenses = async () => {
+    const cluster = ClusterType.title;
     try {
       const response = await fetch(
-        `https://expenses-monitoring-system-1.onrender.com/api/expenses/${ClusterType.title}`
+        `https://expenses-monitoring-system-1.onrender.com/api/expenses/${cluster}`
       );
       const data = await response.json();
+
       const processedData = data.map((item) => ({
         ...item,
         date: new Date(item.date),
       }));
-      setSelectedYear(
-        processedData[0].date.toLocaleString("default", { month: "long" })
-      );
+
+      if (processedData.length > 0) {
+        setSelectedYear(
+          processedData[0].date.toLocaleString("default", { month: "long" })
+        );
+      }
+
       setExpenses(processedData);
       setIsLoading(false);
 
@@ -41,7 +47,7 @@ function Expenses({ ClusterType }) {
 
   useEffect(() => {
     fetchExpenses();
-  }, []);
+  }, [ClusterType]);
 
   function handleYearChange(year) {
     setSelectedYear(year);
@@ -55,7 +61,7 @@ function Expenses({ ClusterType }) {
   useEffect(() => {
     if (isLoading) return;
     if (filteredItems.length === 0) {
-      setShowDialog(true);
+      // setShowDialog(true);
       console.log("No items found for", selectedYear);
       setError(`No items found for ${selectedYear}.`);
     } else {
@@ -77,7 +83,7 @@ function Expenses({ ClusterType }) {
         throw new Error("Date fields are required!");
       }
     } catch (error) {
-      setShowDialog(true);
+      // setShowDialog(true);
       setError(error.message);
       return;
     }
@@ -85,7 +91,7 @@ function Expenses({ ClusterType }) {
       title: document.getElementById("Title").value,
       amount: document.getElementById("Amount").value,
       date: new Date(document.getElementById("date").value),
-      cluster: ClusterType,
+      cluster: ClusterType.title,
     };
     setExpenses((pervExpenses) => [...pervExpenses, ExpenseData]);
     // console.log('Expense saved!');
@@ -151,7 +157,7 @@ function Expenses({ ClusterType }) {
   // }
   return (
     <div className="expenses">
-      <h1>{ClusterType}</h1>
+      <h1>{ClusterType.title}</h1>
       <button onClick={() => setShowInputBox(true)}>Add Expense</button>
       <div className="balance-display">Balance: {balance}</div>
       {showInputBox && (

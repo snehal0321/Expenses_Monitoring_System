@@ -6,19 +6,25 @@ import { Row, Col, Space } from "antd";
 import { useState } from "react";
 
 function App() {
-  const [cluster, setCluster] = useState("");
+  const [cluster, setCluster] = useState({});
+  const [clusterSelected, setClusteSelected] = useState(false);
 
   function handleSelectedCluster(clusterType) {
     setCluster(clusterType);
-    console.log(`Selected cluster: ${clusterType}`);
+    setClusteSelected(true);
   }
+  console.log("Selected Cluster", cluster.title);
 
   return (
     <>
       <div>
         <img src={reactLogo} alt="React Logo" className="logo" width="100" />
         <Cluster SelectedCluster={handleSelectedCluster} />
-        <Expenses ClusterType={cluster} />
+        {clusterSelected ? (
+          <Expenses ClusterType={cluster} />
+        ) : (
+          <h3>Select Mode</h3>
+        )}
       </div>
     </>
   );
