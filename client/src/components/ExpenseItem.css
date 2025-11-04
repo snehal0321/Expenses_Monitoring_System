@@ -38,16 +38,18 @@
 }
 
 .delete-button {
-  all: unset;
+  /* all: unset; */
   display: inline-block;
-  background-color: #ff4d4d;
+  background-color: black;
   color: white;
   border-radius: 12px;
   padding: 0.5rem 0.6rem;
   margin-left: 1rem;
   cursor: pointer;
-  transition: background 160ms ease, color 160ms ease, transform 160ms ease,
-    box-shadow 160ms ease;
+}
+
+.delete-button:hover {
+  box-shadow: 0 px 10px #ff1a1a;
 }
 
 /* 🖥️ Larger screens */
@@ -68,7 +70,7 @@
     padding: 0.5rem 1.5rem;
   }
   .delete-button .icon {
-    display: inline;
+    display: none;
     /* padding: 1px; */
     /* margin-left: 2px; */
   }

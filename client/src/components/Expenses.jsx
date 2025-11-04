@@ -178,9 +178,9 @@ function Expenses({ ClusterType }) {
           onSave={handleSave}
         >
           <h2>Input Expense Details Here</h2>
-          <input id="Title" type="text" placeholder="Title" />
-          <br />
           <input id="Amount" type="number" placeholder="Amount" />
+          <br />
+          <input id="Title" type="text" placeholder="Title" />
           <br />
           <input id="date" type="date" />
           <br />

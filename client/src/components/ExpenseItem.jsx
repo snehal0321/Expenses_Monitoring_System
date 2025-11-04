@@ -10,8 +10,8 @@ function ExpenseItem(props) {
         <div className="expense-item__price">₹{props.amount}</div>
       </div>
       <button className="delete-button" onClick={props.onDelete}>
-        <span className="text">Delete</span>
         <span className="icon">x</span>
+        <span className="text">Delete</span>
       </button>
     </div>
   );
