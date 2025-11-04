@@ -60,6 +60,7 @@ router.delete("/:id", async (req, res) => {
 router.post("/cluster/save", async (req, res) => {
   try {
     const { title, balance } = req.body;
+    const date = new Date().Date.now();
 
     if (!title || !balance) {
       return res.status(400).json({ error: "All fields are required" });
@@ -68,7 +69,7 @@ router.post("/cluster/save", async (req, res) => {
     const newCluster = new Cluster({
       title,
       balance,
-      date: new Date(),
+      date,
     });
 
     const savedCluster = await newCluster.save();
