@@ -6,5 +6,6 @@ const clusterSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
 });
 
-const Cluster = mongoose.model("Cluster", clusterSchema);
+const Cluster =
+  mongoose.models.Cluster || mongoose.model("Cluster", clusterSchema);
 export default Cluster;
