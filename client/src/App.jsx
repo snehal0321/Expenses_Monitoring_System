@@ -13,6 +13,13 @@ function App() {
     setCluster(clusterType);
     setClusteSelected(true);
   }
+
+  //if (processedData.length > 0) {
+  //   setSelectedYear(
+  //     processedData[0].date.toLocaleString("default", { month: "long" })
+  //   );
+  // }
+
   console.log("Selected Cluster", cluster.title);
 
   return (
@@ -21,7 +28,7 @@ function App() {
         <img src={reactLogo} alt="React Logo" className="logo" width="100" />
         <Cluster SelectedCluster={handleSelectedCluster} />
         {clusterSelected ? (
-          <Expenses ClusterType={cluster} />
+          <Expenses ClusterType={cluster} month={selectedMonth} />
         ) : (
           <h3>Select Mode</h3>
         )}

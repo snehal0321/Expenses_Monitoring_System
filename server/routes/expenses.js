@@ -68,6 +68,7 @@ router.post("/cluster/save", async (req, res) => {
     const newCluster = new Cluster({
       title,
       balance,
+      date: new Date().Date.now(),
     });
 
     const savedCluster = await newCluster.save();
@@ -79,7 +80,7 @@ router.post("/cluster/save", async (req, res) => {
 
 router.get("/cluster/find", async (req, res) => {
   try {
-    const cluster = await Cluster.find().sort({ balance: -1 });
+    const cluster = await Cluster.find().sort({ date: -1 });
     res.json(cluster);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch expenses" });

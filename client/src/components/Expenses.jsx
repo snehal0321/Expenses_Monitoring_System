@@ -5,12 +5,12 @@ import ExpensesFilter from "./ExpensesFilter.jsx";
 import ErrorModule from "./ErrorModule.jsx";
 import InputModule from "./InputModel.jsx";
 
-function Expenses({ ClusterType }) {
+function Expenses({ ClusterType, selectedMonth }) {
   const [expenses, setExpenses] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
   const [showInputBox, setShowInputBox] = useState(false);
   const [error, setError] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
+  // const [selectedYear, setSelectedYear] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   const items = expenses;
@@ -30,11 +30,11 @@ function Expenses({ ClusterType }) {
         date: new Date(item.date),
       }));
 
-      if (processedData.length > 0) {
-        setSelectedYear(
-          processedData[0].date.toLocaleString("default", { month: "long" })
-        );
-      }
+      // if (processedData.length > 0) {
+      //   setSelectedYear(
+      //     processedData[0].date.toLocaleString("default", { month: "long" })
+      //   );
+      // }
 
       setExpenses(processedData);
       setIsLoading(false);
@@ -49,26 +49,26 @@ function Expenses({ ClusterType }) {
     fetchExpenses();
   }, [ClusterType]);
 
-  function handleYearChange(year) {
-    setSelectedYear(year);
-  }
+  // function handleYearChange(year) {
+  //   setSelectedYear(year);
+  // }
 
-  const filteredItems = items.filter(
-    (item) =>
-      item.date.toLocaleString("default", { month: "long" }) === selectedYear
-  );
+  // const filteredItems = items.filter(
+  //   (item) =>
+  //     item.date.toLocaleString("default", { month: "long" }) === selectedYear
+  // );
 
-  useEffect(() => {
-    if (isLoading) return;
-    if (filteredItems.length === 0) {
-      // setShowDialog(true);
-      console.log("No items found for", selectedYear);
-      setError(`No items found for ${selectedYear}.`);
-    } else {
-      // setShowDialog(false);
-      //  setError('');
-    }
-  }, [filteredItems]);
+  // useEffect(() => {
+  //   if (isLoading) return;
+  //   if (filteredItems.length === 0) {
+  //     // setShowDialog(true);
+  //     console.log("No items found for", selectedYear);
+  //     setError(`No items found for ${selectedYear}.`);
+  //   } else {
+  //     // setShowDialog(false);
+  //     //  setError('');
+  //   }
+  // }, [filteredItems]);
 
   async function handleSave() {
     // Logic to save the new expense
@@ -145,11 +145,11 @@ function Expenses({ ClusterType }) {
     console.log("Updated expenses:", expenses);
   }, [expenses]);
 
-  const Totalamount = filteredItems.reduce(
-    (total, item) => total + parseFloat(item.amount),
-    0
-  );
-  const balance = ClusterType.balance - Totalamount;
+  // const Totalamount = filteredItems.reduce(
+  //   (total, item) => total + parseFloat(item.amount),
+  //   0
+  // );
+  // const balance = ClusterType.balance - Totalamount;
 
   // if (isLoading) {
   //   // setShowDialog(false);
@@ -176,11 +176,11 @@ function Expenses({ ClusterType }) {
         </InputModule>
       )}
 
-      <ExpensesFilter
+      {/* <ExpensesFilter
         selected={selectedYear}
         selectedYear={handleYearChange}
         expensesData={expenses}
-      />
+      /> */}
       {showDialog && (
         <ErrorModule
           // message={`No items found for ${selectedYear}.`}

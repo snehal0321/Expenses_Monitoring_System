@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./Cluster.css";
 import InputModule from "./InputModel.jsx";
 import Expenses from "./Expenses.jsx";
+import ExpensesFilter from "./ExpensesFilter.jsx";
 
 function Cluster({ SelectedCluster }) {
   const [showInputBox, setShowInputBox] = useState(false);
   const [clusters, setClusters] = useState([]);
   const [selectedCluster, setSelectedCluster] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedYear, setSelectedYear] = useState("");
 
   // Fetch all clusters
   const fetchCluster = async () => {
@@ -16,8 +18,13 @@ function Cluster({ SelectedCluster }) {
         "https://expenses-monitoring-system-1.onrender.com/api/expenses/cluster/find"
       );
       const data = await response.json();
-      setClusters(data);
+      const processedData = data.map((item) => ({
+        ...item,
+        date: new Date(item.date),
+      }));
+      setClusters(processedData);
       setIsLoading(false);
+
       console.log("Fetched clusters:", data);
     } catch (error) {
       console.error("Error fetching clusters:", error);
@@ -27,6 +34,29 @@ function Cluster({ SelectedCluster }) {
   useEffect(() => {
     fetchCluster();
   }, []);
+
+  const items = clusters;
+
+  function handleYearChange(year) {
+    setSelectedYear(year);
+  }
+
+  const filteredItems = items.filter(
+    (item) =>
+      item.date.toLocaleString("default", { month: "long" }) === selectedYear
+  );
+
+  useEffect(() => {
+    if (isLoading) return;
+    if (filteredItems.length === 0) {
+      // setShowDialog(true);
+      console.log("No items found for", selectedYear);
+      // setError(`No items found for ${selectedYear}.`);
+    } else {
+      // setShowDialog(false);
+      //  setError('');
+    }
+  }, [filteredItems]);
 
   // When a cluster is clicked
   const handleClusterClick = (clusterType) => {
@@ -59,6 +89,13 @@ function Cluster({ SelectedCluster }) {
 
   return (
     <>
+      <div>
+        <ExpensesFilter
+          selected={selectedYear}
+          selectedYear={handleYearChange}
+          expensesData={clusters}
+        />
+      </div>
       <div className="cluster">
         {showInputBox && (
           <InputModule
