@@ -37,6 +37,19 @@
   border-radius: 12px;
 }
 
+.delete-button {
+  all: unset;
+  display: inline-block;
+  background-color: #ff4d4d;
+  color: white;
+  border-radius: 12px;
+  padding: 0.5rem 0.6rem;
+  margin-left: 1rem;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
 /* 🖥️ Larger screens */
 @media (min-width: 580px) {
   .expense-item__description {
@@ -59,8 +72,8 @@
 /* 📱 Mobile view improvement */
 @media (max-width: 579px) {
   .expense-item {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
   }
 
   .expense-item__description {
@@ -78,5 +91,14 @@
   .expense-item__price {
     align-self: flex-end;
     margin-top: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .delete-button .text {
+      display: none;
+    }
+    .delete-button .icon {
+      display: inline;
+    }
   }
 }

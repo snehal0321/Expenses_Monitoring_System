@@ -95,10 +95,10 @@ function Expenses({ ClusterType }) {
       return;
     }
     const ExpenseData = {
-      title: document.getElementById("Title").value,
+      title: document.getElementById("Title").value.trim(),
       amount: document.getElementById("Amount").value,
       date: new Date(document.getElementById("date").value),
-      cluster: ClusterType.title,
+      cluster: ClusterType.title.trim(),
     };
     setExpenses((pervExpenses) => [...pervExpenses, ExpenseData]);
     // console.log('Expense saved!');

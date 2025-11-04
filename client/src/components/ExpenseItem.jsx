@@ -1,16 +1,18 @@
-import ExpenseDate from './ExpenseDate.jsx';
-import './ExpenseItem.css';
+import ExpenseDate from "./ExpenseDate.jsx";
+import "./ExpenseItem.css";
 
 function ExpenseItem(props) {
-
   return (
-    <div className='expense-item'>
+    <div className="expense-item">
       <ExpenseDate date={props.date} />
-      <div className='expense-item__description'>
+      <div className="expense-item__description">
         <h2>{props.title}</h2>
-        <div className='expense-item__price'>₹{props.amount}</div>
+        <div className="expense-item__price">₹{props.amount}</div>
       </div>
-      <button onClick={props.onDelete} >Delete</button>
+      <button className="delete-button" onClick={props.onDelete}>
+        <span className="text">Delete</span>
+        <span className="icon">🗑️</span>
+      </button>
     </div>
   );
 }
