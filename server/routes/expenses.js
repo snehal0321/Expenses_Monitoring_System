@@ -60,7 +60,7 @@ router.delete("/:id", async (req, res) => {
 router.post("/cluster/save", async (req, res) => {
   try {
     const { title, balance } = req.body;
-    const date = new Date().Date.now();
+    const date = new Date(); // ✅ correct way
 
     if (!title || !balance) {
       return res.status(400).json({ error: "All fields are required" });
@@ -75,10 +75,10 @@ router.post("/cluster/save", async (req, res) => {
     const savedCluster = await newCluster.save();
     res.status(201).json(savedCluster);
   } catch (err) {
+    console.error("Error saving cluster:", err);
     res.status(500).json({ error: "Failed to add expense" });
   }
 });
-
 router.get("/cluster/find", async (req, res) => {
   try {
     const cluster = await Cluster.find().sort({ date: -1 });
