@@ -1,36 +1,34 @@
-import  { createPortal } from 'react-dom';
-import { useEffect, useRef } from 'react';
-import './Model.css';
+import { createPortal } from "react-dom";
+import { useEffect, useRef } from "react";
+import "./Model.css";
 
-function Model({onClose, open ,children, mode}) {  
-    const dialogRef = useRef(null); 
+function Model({ onClose, open, children, mode }) {
+  const dialogRef = useRef(null);
 
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (open) {
+      if (!dialog.open) dialog.showModal();
+    } else {
+      if (dialog.open) dialog.close();
+    }
+  }, [open]);
 
-     useEffect(() => {
-        const dialog = dialogRef.current;
-        if (open) {
-        if (!dialog.open) dialog.showModal();
-        } else {
-        if (dialog.open) dialog.close();
-        }
-    }, [open]);
-
-    return createPortal(
-        <>
-            <div className='dialog-backdrop'>
-                <dialog
-                    className="error-module" 
-                    ref={dialogRef}
-                    onClose={onClose}
-                >
-                    {children}
-                    <button onClick={onClose}>Close</button>    
-                    
-                </dialog>
-            </div>
-        </>,
-        document.getElementById(`${mode}`)
-    );
-}   
+  return createPortal(
+    <>
+      <div className="dialog-backdrop">
+        <dialog
+          className={mode === "error-root" ? "error-module" : "input-module"}
+          ref={dialogRef}
+          onClose={onClose}
+        >
+          {children}
+          <button onClick={onClose}>Close</button>
+        </dialog>
+      </div>
+    </>,
+    document.getElementById(`${mode}`)
+  );
+}
 
 export default Model;
