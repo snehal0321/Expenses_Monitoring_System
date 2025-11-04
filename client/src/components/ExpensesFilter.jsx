@@ -16,8 +16,11 @@ const ExpensesFilter = ({ selected, selectedYear, expensesData }) => {
   return (
     <div className="expenses-filter">
       <div className="expenses-filter__control">
-        <label>Filter by Month</label>
-        <select value={selected} onChange={handleYearChange}>
+        <select
+          aria-placeholder="Filter By Month"
+          value={selected}
+          onChange={handleYearChange}
+        >
           {uniqueYears.map((uniqueYears) => (
             <option value={uniqueYears} key={uniqueYears}>
               {uniqueYears}

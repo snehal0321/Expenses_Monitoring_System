@@ -16,6 +16,7 @@
 .cluster {
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 12px;
   background: transparent;
 }
@@ -26,6 +27,7 @@
   padding: 6px;
   border-radius: var(--radius);
   box-shadow: 0 2px 8px rgba(16, 24, 40, 0.06);
+  height: 80%;
 }
 
 /* Horizontal list */
