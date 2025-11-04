@@ -68,7 +68,7 @@ router.post("/cluster/save", async (req, res) => {
     const newCluster = new Cluster({
       title,
       balance,
-      date: new Date().Date.now(),
+      date: new Date(),
     });
 
     const savedCluster = await newCluster.save();
