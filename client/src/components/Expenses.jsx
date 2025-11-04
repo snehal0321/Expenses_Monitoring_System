@@ -1,7 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import ExpenseItem from "./ExpenseItem.jsx";
 import "./Expenses.css";
-import ExpensesFilter from "./ExpensesFilter.jsx";
 import ErrorModule from "./ErrorModule.jsx";
 import InputModule from "./InputModel.jsx";
 
@@ -12,8 +11,6 @@ function Expenses({ ClusterType }) {
   const [error, setError] = useState("");
   // const [selectedYear, setSelectedYear] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-
-  const items = expenses;
 
   console.log("ClusterType in Expenses:", ClusterType.title);
 
@@ -65,6 +62,7 @@ function Expenses({ ClusterType }) {
         item.date.toLocaleString("default", { month: "long" }) === selectedYear
     );
   }, [expenses, selectedYear]);
+
   useEffect(() => {
     if (isLoading) return;
     if (filteredItems.length === 0) {
@@ -80,17 +78,17 @@ function Expenses({ ClusterType }) {
   async function handleSave() {
     // Logic to save the new expense
     try {
-      if (document.getElementById("Title").value === "") {
-        throw new Error("Title fields are required!");
-      }
       if (document.getElementById("Amount").value === "") {
         throw new Error("Amount fields are required!");
+      }
+      if (document.getElementById("Title").value === "") {
+        throw new Error("Title fields are required!");
       }
       if (document.getElementById("date").value === "") {
         throw new Error("Date fields are required!");
       }
     } catch (error) {
-      // setShowDialog(true);
+      setShowDialog(true);
       setError(error.message);
       return;
     }
@@ -192,6 +190,7 @@ function Expenses({ ClusterType }) {
         selectedYear={handleYearChange}
         expensesData={expenses}
       /> */}
+
       {showDialog && (
         <ErrorModule
           // message={`No items found for ${selectedYear}.`}
@@ -199,9 +198,6 @@ function Expenses({ ClusterType }) {
           open={showDialog}
           onClose={() => {
             setShowDialog(false);
-            setSelectedYear(
-              expenses[0].date.toLocaleString("default", { month: "long" })
-            );
           }}
         />
       )}
