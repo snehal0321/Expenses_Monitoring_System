@@ -89,14 +89,14 @@ function Cluster({ SelectedCluster }) {
 
   return (
     <>
-      <div>
-        <ExpensesFilter
-          selected={selectedYear}
-          selectedYear={handleYearChange}
-          expensesData={clusters}
-        />
-      </div>
       <div className="cluster">
+        <div>
+          <ExpensesFilter
+            selected={selectedYear}
+            selectedYear={handleYearChange}
+            expensesData={clusters}
+          />
+        </div>
         {showInputBox && (
           <InputModule
             open={showInputBox}
@@ -125,7 +125,7 @@ function Cluster({ SelectedCluster }) {
               </li>
             ))}
             <li className="cluster-item" onClick={() => setShowInputBox(true)}>
-              <button>Add</button>
+              <button>+</button>
             </li>
           </ul>
         </nav>

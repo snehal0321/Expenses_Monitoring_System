@@ -20,7 +20,7 @@ function App() {
   //   );
   // }
 
-  console.log("Selected Cluster", cluster.title);
+  console.log("Selected Cluster", cluster);
 
   return (
     <>
@@ -28,7 +28,7 @@ function App() {
         <img src={reactLogo} alt="React Logo" className="logo" width="100" />
         <Cluster SelectedCluster={handleSelectedCluster} />
         {clusterSelected ? (
-          <Expenses ClusterType={cluster} month={selectedMonth} />
+          <Expenses ClusterType={cluster} />
         ) : (
           <h3>Select Mode</h3>
         )}

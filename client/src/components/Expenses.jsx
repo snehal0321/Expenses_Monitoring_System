@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import ExpenseItem from "./ExpenseItem.jsx";
 import "./Expenses.css";
 import ExpensesFilter from "./ExpensesFilter.jsx";
 import ErrorModule from "./ErrorModule.jsx";
 import InputModule from "./InputModel.jsx";
 
-function Expenses({ ClusterType, selectedMonth }) {
+function Expenses({ ClusterType }) {
   const [expenses, setExpenses] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
   const [showInputBox, setShowInputBox] = useState(false);
@@ -53,22 +53,29 @@ function Expenses({ ClusterType, selectedMonth }) {
   //   setSelectedYear(year);
   // }
 
-  // const filteredItems = items.filter(
-  //   (item) =>
-  //     item.date.toLocaleString("default", { month: "long" }) === selectedYear
-  // );
+  const selectedYear = useMemo(() => {
+    return ClusterType?.date
+      ? new Date(ClusterType.date).toLocaleString("default", { month: "long" })
+      : "";
+  }, [ClusterType]);
 
-  // useEffect(() => {
-  //   if (isLoading) return;
-  //   if (filteredItems.length === 0) {
-  //     // setShowDialog(true);
-  //     console.log("No items found for", selectedYear);
-  //     setError(`No items found for ${selectedYear}.`);
-  //   } else {
-  //     // setShowDialog(false);
-  //     //  setError('');
-  //   }
-  // }, [filteredItems]);
+  const filteredItems = useMemo(() => {
+    return expenses.filter(
+      (item) =>
+        item.date.toLocaleString("default", { month: "long" }) === selectedYear
+    );
+  }, [expenses, selectedYear]);
+  useEffect(() => {
+    if (isLoading) return;
+    if (filteredItems.length === 0) {
+      // setShowDialog(true);
+      console.log("No items found for", selectedYear);
+      setError(`No items found for ${selectedYear}.`);
+    } else {
+      // setShowDialog(false);
+      //  setError('');
+    }
+  }, [filteredItems]);
 
   async function handleSave() {
     // Logic to save the new expense
@@ -145,16 +152,20 @@ function Expenses({ ClusterType, selectedMonth }) {
     console.log("Updated expenses:", expenses);
   }, [expenses]);
 
-  // const Totalamount = filteredItems.reduce(
-  //   (total, item) => total + parseFloat(item.amount),
-  //   0
-  // );
-  // const balance = ClusterType.balance - Totalamount;
+  const Totalamount = filteredItems.reduce(
+    (total, item) => total + parseFloat(item.amount),
+    0
+  );
+  const balance = ClusterType.balance - Totalamount;
 
   // if (isLoading) {
-  //   // setShowDialog(false);
+  //   setShowDialog(false);
   //   return <div>Loading....</div>;
   // }
+  useEffect(() => {
+    if (isLoading) setShowDialog(false);
+  }, [isLoading]);
+
   return (
     <div className="expenses">
       <h1>{ClusterType.title}</h1>
