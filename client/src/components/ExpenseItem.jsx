@@ -11,7 +11,7 @@ function ExpenseItem(props) {
       </div>
       <button className="delete-button" onClick={props.onDelete}>
         <span className="text">Delete</span>
-        <span className="icon">🗑️</span>
+        <span className="icon">x</span>
       </button>
     </div>
   );

@@ -67,6 +67,11 @@
     font-size: 1.25rem;
     padding: 0.5rem 1.5rem;
   }
+  .delete-button .icon {
+    display: inline;
+    /* padding: 1px; */
+    /* margin-left: 2px; */
+  }
 }
 
 /* 📱 Mobile view improvement */
