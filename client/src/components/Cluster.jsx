@@ -23,6 +23,11 @@ function Cluster({ SelectedCluster }) {
         date: new Date(item.date),
       }));
       setClusters(processedData);
+      setSelectedYear(
+        processedData.length > 0
+          ? processedData[0].date.toLocaleString("default", { month: "long" })
+          : ""
+      );
       setIsLoading(false);
 
       console.log("Fetched clusters:", data);
@@ -39,6 +44,8 @@ function Cluster({ SelectedCluster }) {
 
   function handleYearChange(year) {
     setSelectedYear(year);
+    SelectedCluster && SelectedCluster(null); // reset selected cluster in parent
+    console.log("Selected year:", year);
   }
 
   const filteredItems = items.filter(
@@ -113,7 +120,7 @@ function Cluster({ SelectedCluster }) {
 
         <nav className="cluster-nav">
           <ul className="cluster-list">
-            {clusters.map((clusterItem) => (
+            {filteredItems.map((clusterItem) => (
               <li
                 key={clusterItem._id}
                 className={`cluster-item ${

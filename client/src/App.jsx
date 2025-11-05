@@ -7,11 +7,11 @@ import { useState } from "react";
 
 function App() {
   const [cluster, setCluster] = useState({});
-  const [clusterSelected, setClusteSelected] = useState(false);
+  const [clusterSelected, setClusterSelected] = useState(false);
 
   function handleSelectedCluster(clusterType) {
     setCluster(clusterType);
-    setClusteSelected(true);
+    setClusterSelected(true);
   }
 
   //if (processedData.length > 0) {
@@ -27,8 +27,8 @@ function App() {
       <div>
         <img src={reactLogo} alt="React Logo" className="logo" width="100" />
         <Cluster SelectedCluster={handleSelectedCluster} />
-        {clusterSelected ? (
-          <Expenses ClusterType={cluster} />
+        {clusterSelected && cluster ? (
+          <Expenses key={cluster._id} ClusterType={cluster} />
         ) : (
           <h3>Select Mode</h3>
         )}
