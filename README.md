@@ -19,16 +19,19 @@ A simple and intuitive expense tracking application built with React.js that hel
 ## Installation
 
 1. Clone the repository
+
 ```bash
 git clone [repository-url]
 ```
 
 2. Install dependencies
+
 ```bash
 npm install
 ```
 
 3. Run the application
+
 ```bash
 npm start
 ```
@@ -40,12 +43,10 @@ npm start
 3. View expenses filtered by year
 4. Monitor spending patterns through the visual chart
 
-## Demo
-For demo click the link below 
-https://expensemonitering.netlify.app/
+<!-- ## Demo
+For demo click the link below
+https://expensemonitering.netlify.app/ -->
 
 ## Developer
 
 ### Snehal Mashelkar
-
-
