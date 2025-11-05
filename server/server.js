@@ -1,8 +1,8 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import expensesRoutes from './routes/expenses.js';
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import dotenv from "dotenv";
+import expensesRoutes from "./routes/expenses.js";
 
 dotenv.config();
 
@@ -14,13 +14,13 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/expenses', expensesRoutes);
+app.use("/api/expenses", expensesRoutes);
 
 // MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log('✅ Connected to MongoDB');
+    console.log("✅ Connected to MongoDB");
     app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
   })
-  .catch((err) => console.error('❌ MongoDB connection failed:', err));
+  .catch((err) => console.error("❌ MongoDB connection failed:", err));

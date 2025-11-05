@@ -4,13 +4,13 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-  "start": "node server.js",
-  "build": "echo 'No build step needed for backend'"
-},
+    "start": "node server.js",
+    "build": "echo 'No build step needed for backend'"
+  },
   "dependencies": {
-    "express": "^4.19.2",
-    "mongoose": "^8.0.0",
     "cors": "^2.8.5",
-    "dotenv": "^17.2.3"
+    "dotenv": "^17.2.3",
+    "express": "^4.19.2",
+    "mongoose": "^8.0.0"
   }
 }

@@ -1,6 +1,11 @@
 import express from "express";
 import Expense from "../models/Expense.js";
 import Cluster from "../models/Cluster.js";
+import Login from "../models/Login.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import dotenv from "dotenv";
+dotenv.config();
 
 const router = express.Router();
 
@@ -85,6 +90,42 @@ router.get("/cluster/find", async (req, res) => {
     res.json(cluster);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch expenses" });
+  }
+});
+
+router.post("/login", async (req, res) => {
+  try {
+    const { user, password } = req.body;
+    if (!user || !password) {
+      return res.status(400).json({ error: "User and password are required" });
+    }
+
+    const foundUser = await Login.findOne({ user });
+    if (!foundUser) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    // Compare password (hashed)
+    const isMatch = await bcrypt.compare(password, foundUser.password);
+    if (!isMatch) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    // Create JWT token
+    const token = jwt.sign(
+      { id: foundUser._id, user: foundUser.user },
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      user: foundUser.user,
+    });
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ error: "Server error during login" });
   }
 });
 

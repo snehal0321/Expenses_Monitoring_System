@@ -1,14 +1,17 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Login from "./Login.jsx";
+import { AuthProvider } from "./AuthContext.jsx";
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("/sw.js").then((reg) => {
       console.log("Service worker registered:", reg);
 
-      // 🔁 Force reload when a new version of the SW is found
+      // 🔁 Auto-refresh on new SW version
       reg.onupdatefound = () => {
         const newWorker = reg.installing;
         newWorker.onstatechange = () => {
@@ -16,7 +19,7 @@ if ("serviceWorker" in navigator) {
             newWorker.state === "installed" &&
             navigator.serviceWorker.controller
           ) {
-            window.location.reload(); // Refresh automatically
+            window.location.reload();
           }
         };
       };
@@ -24,8 +27,27 @@ if ("serviceWorker" in navigator) {
   });
 }
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <AuthProvider>
+        <ProtectedRoute>
+          <App />
+        </ProtectedRoute>
+      </AuthProvider>
+    ),
+  },
+  {
+    path: "/login",
+    element: (
+      <AuthProvider>
+        <Login />
+      </AuthProvider>
+    ),
+  },
+]);
+
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
+  <RouterProvider router={router} />
 );

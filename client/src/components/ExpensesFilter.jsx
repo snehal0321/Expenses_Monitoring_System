@@ -17,7 +17,7 @@ const ExpensesFilter = ({ selected, selectedYear, expensesData }) => {
     <div className="expenses-filter">
       <div className="expenses-filter__control">
         <select
-          aria-placeholder="Filter By Month"
+          placeholder="Filter By Month"
           value={selected}
           onChange={handleYearChange}
         >
