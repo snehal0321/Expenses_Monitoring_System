@@ -50,7 +50,7 @@ https://expensemonitering.netlify.app/
 
 The site is still under production phase therefore login with credentials given :
 
-username : test
+username : tester
 
 password : pass
 
