@@ -1,6 +1,6 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
 import { AuthContext } from "../AuthContext";
-import userIcon from "../assets/react.svg"; // replace with your own icon if needed
+import userIcon from "../assets/profile.jpg"; // replace with your own icon if needed
 import "./ProfileMenu.css";
 
 const ProfileMenu = () => {
