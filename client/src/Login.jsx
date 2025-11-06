@@ -1,14 +1,22 @@
 import React, { useContext, useRef, useEffect } from "react";
-import { AuthContext } from "./AuthContext"; // ✅ must match your export
+import { AuthContext } from "./AuthContext";
+import { useNavigate } from "react-router-dom"; // ✅ import this
 import "./Login.css";
 
 function Login() {
   const { login } = useContext(AuthContext);
   const [open, setOpen] = React.useState(true);
+  const dialogRef = useRef(null);
+  const navigate = useNavigate(); // ✅ initialize navigation
 
   const handleLogin = async () => {
-    const user = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+    const user = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (!user || !password) {
+      alert("Please enter both username and password");
+      return;
+    }
 
     const success = await login({ user, password });
     if (!success) {
@@ -16,10 +24,11 @@ function Login() {
     } else {
       alert("Login successful!");
       setOpen(false);
+
+      // ✅ Redirect to main page after login
+      navigate("/");
     }
   };
-
-  const dialogRef = useRef(null);
 
   useEffect(() => {
     const dialog = dialogRef.current;
