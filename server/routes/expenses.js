@@ -94,35 +94,26 @@ router.get("/cluster/find", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  console.log("Login request body:", user, password);
   try {
     const { user, password } = req.body;
+    console.log("Login request body:", user, password);
 
     if (!user || !password) {
       return res.status(400).json({ error: "User and password are required" });
     }
 
-    const foundUser = await Login.findOne({ user: user });
+    const foundUser = await Login.findOne({ user });
     if (!foundUser) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    // Compare password (hashed)
-    const isMatch = await bcrypt.compare(password, foundUser.password);
-    if (!isMatch) {
+    // Simple password check (plain text)
+    if (foundUser.password !== password) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    // Create JWT token
-    const token = jwt.sign(
-      { id: foundUser._id, user: foundUser.user },
-      JWT_SECRET,
-      { expiresIn: "1h" }
-    );
-
     res.status(200).json({
       message: "Login successful",
-      token,
       user: foundUser.user,
     });
   } catch (error) {

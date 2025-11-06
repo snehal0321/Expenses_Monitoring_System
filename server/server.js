@@ -12,15 +12,12 @@ const PORT = process.env.PORT || 8080;
 // Middleware
 app.use(
   cors({
-    origin: [
-      "https://expensemonitering.netlify.app", // your deployed frontend
-      "http://localhost:5173", // for local testing
-    ],
+    origin: ["https://expensemonitering.netlify.app", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
+    allowedHeaders: ["Content-Type"],
   })
 );
+
 app.use(express.json());
 
 // Routes
