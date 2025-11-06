@@ -6,6 +6,7 @@ import { Row, Col, Space } from "antd";
 import { useState, useContext, useEffect, use } from "react";
 import { AuthContext } from "./AuthContext.jsx";
 import ErrorModule from "./components/ErrorModule.jsx";
+import ProfileMenu from "./components/ProfileMenu.jsx";
 
 function App() {
   const [cluster, setCluster] = useState({});
@@ -31,8 +32,12 @@ function App() {
 
   return (
     <>
-      <div>
+      <div className="app-header">
         <img src={reactLogo} alt="React Logo" className="logo" width="100" />
+        <ProfileMenu />
+      </div>
+
+      <div className="App">
         <Cluster SelectedCluster={handleSelectedCluster} />
         {clusterSelected && cluster ? (
           <Expenses key={cluster._id} ClusterType={cluster} />

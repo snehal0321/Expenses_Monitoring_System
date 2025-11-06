@@ -4,6 +4,26 @@
   text-align: center;
 }
 
+/* ----- Header Layout ----- */
+.app-header {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: #fff;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1500;
+}
+
+/* App Title or Logo */
+.app-header .app-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ----- Logo ----- */
 .logo {
   height: 10em;
   width: 10em;
@@ -11,13 +31,14 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
-
 
 /* 🟢 Responsive */
 @media (max-width: 600px) {
@@ -33,5 +54,10 @@
 
   h1 {
     font-size: 2rem;
+  }
+
+  .app-header {
+    padding: 0 12px;
+    height: 50px;
   }
 }
