@@ -9,7 +9,16 @@ function Login() {
   const dialogRef = useRef(null);
   const navigate = useNavigate(); // ✅ initialize navigation
 
-  const handleLogin = async () => {
+  const handleFormKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById("login-button").click();
+    }
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
     const user = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value.trim();
 
@@ -40,14 +49,18 @@ function Login() {
 
   return (
     <div className="dialog-backdrop">
-      <dialog ref={dialogRef} className="login-module">
-        <h2>Login</h2>
-        <input id="username" type="text" placeholder="Username" />
-        <br />
-        <input id="password" type="password" placeholder="Password" />
-        <br />
-        <button onClick={handleLogin}>Login</button>
-      </dialog>
+      <form onKeyDown={handleFormKeyDown} onSubmit={handleLogin}>
+        <dialog ref={dialogRef} className="login-module">
+          <h2>Login</h2>
+          <input id="username" type="text" placeholder="Username" />
+          <br />
+          <input id="password" type="password" placeholder="Password" />
+          <br />
+          <button type="submit" id="login-button">
+            Login
+          </button>
+        </dialog>
+      </form>
     </div>
   );
 }

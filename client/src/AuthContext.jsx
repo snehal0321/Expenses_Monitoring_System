@@ -43,9 +43,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    // Clear local storage
     localStorage.removeItem("jwt_token");
+
+    // Reset auth states
     setIsAuthenticated(false);
     setUser(null);
+
+    // ✅ Completely reload the
+    window.location.reload();
   };
 
   return (
