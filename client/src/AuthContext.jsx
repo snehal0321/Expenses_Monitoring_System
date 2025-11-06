@@ -18,6 +18,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     // Make API call to backend
+
+    console.log("Logging in with credentials:", credentials);
     const response = await fetch(
       "https://expenses-monitoring-system-1.onrender.com/api/expenses/login",
       {

@@ -101,7 +101,7 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ error: "User and password are required" });
     }
 
-    const foundUser = await Login.findOne({ user });
+    const foundUser = await Login.findOne({ user: user });
     if (!foundUser) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
