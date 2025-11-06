@@ -43,9 +43,16 @@ npm start
 3. View expenses filtered by year
 4. Monitor spending patterns through the visual chart
 
-<!-- ## Demo
+## Demo
+
 For demo click the link below
-https://expensemonitering.netlify.app/ -->
+https://expensemonitering.netlify.app/
+
+The site is still under production phase therefore login with credentials given :
+
+username : test
+
+password : pass
 
 ## Developer
 
