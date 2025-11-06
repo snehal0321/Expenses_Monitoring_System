@@ -1,14 +1,18 @@
 // ExpensesFilter.jsx
 import "./ExpensesFilter.css";
+import { useContext } from "react";
+import { AuthContext } from "../AuthContext.jsx";
 
 const ExpensesFilter = ({ selected, selectedYear, expensesData }) => {
+  const { user } = useContext(AuthContext);
   function handleYearChange(event) {
     const year = event.target.value;
 
     selectedYear(year);
   }
+  const data = expensesData.filter((item) => item.user === user);
 
-  const expenseYears = expensesData.map((expense) =>
+  const expenseYears = data.map((expense) =>
     expense.date.toLocaleString("default", { month: "long" })
   );
   const uniqueYears = [...new Set(expenseYears)];
