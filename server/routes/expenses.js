@@ -95,6 +95,7 @@ router.get("/cluster/find", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
+    console.log("Login request body:", req.body);
     const { user, password } = req.body;
     if (!user || !password) {
       return res.status(400).json({ error: "User and password are required" });
