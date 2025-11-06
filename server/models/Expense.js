@@ -5,6 +5,7 @@ const expenseSchema = new mongoose.Schema({
   amount: { type: Number, required: true },
   date: { type: Date, required: true },
   cluster: { type: String, required: true },
+  user: { type: String, required: true },
 });
 
 const Expense = mongoose.model("Expense", expenseSchema);

@@ -22,7 +22,6 @@ function Login() {
     if (!success) {
       alert("Invalid username or password");
     } else {
-      alert("Login successful!");
       setOpen(false);
 
       // ✅ Redirect to main page after login

@@ -3,11 +3,18 @@ import "./App.css";
 import reactLogo from "./assets/FullLogo.png";
 import Cluster from "./components/Cluster.jsx";
 import { Row, Col, Space } from "antd";
-import { useState } from "react";
+import { useState, useContext, useEffect, use } from "react";
+import { AuthContext } from "./AuthContext.jsx";
+import ErrorModule from "./components/ErrorModule.jsx";
 
 function App() {
   const [cluster, setCluster] = useState({});
   const [clusterSelected, setClusterSelected] = useState(false);
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    user && alert(`Welcome ${user}, you have successfully logged in!`);
+  }, [user]);
 
   function handleSelectedCluster(clusterType) {
     setCluster(clusterType);

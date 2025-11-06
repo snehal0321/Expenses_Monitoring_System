@@ -1,4 +1,5 @@
 // AuthContext.js
+import { set } from "mongoose";
 import React, { createContext, useState, useEffect } from "react";
 
 export const AuthContext = createContext();
@@ -12,6 +13,7 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem("jwt_token");
     if (token) {
       setIsAuthenticated(true);
+      setUser(token.user);
       // Optionally, decode token to get user info or fetch user data
     }
   }, []);

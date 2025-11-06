@@ -25,7 +25,7 @@ router.get("/:clusterType", async (req, res) => {
 // POST a new expense
 router.post("/save", async (req, res) => {
   try {
-    const { title, amount, date, cluster } = req.body;
+    const { title, amount, date, cluster, user } = req.body;
 
     if (!title || !amount || !date || !cluster) {
       return res.status(400).json({ error: "All fields are required" });
@@ -36,6 +36,7 @@ router.post("/save", async (req, res) => {
       amount,
       date: new Date(date),
       cluster,
+      user,
     });
 
     const savedExpense = await newExpense.save();
@@ -64,7 +65,7 @@ router.delete("/:id", async (req, res) => {
 
 router.post("/cluster/save", async (req, res) => {
   try {
-    const { title, balance } = req.body;
+    const { title, balance, user } = req.body;
     const date = new Date(); // ✅ correct way
 
     if (!title || !balance) {
@@ -75,6 +76,7 @@ router.post("/cluster/save", async (req, res) => {
       title,
       balance,
       date,
+      user,
     });
 
     const savedCluster = await newCluster.save();

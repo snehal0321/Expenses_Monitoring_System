@@ -3,6 +3,8 @@ import ExpenseItem from "./ExpenseItem.jsx";
 import "./Expenses.css";
 import ErrorModule from "./ErrorModule.jsx";
 import InputModule from "./InputModel.jsx";
+import { useContext } from "react";
+import { AuthContext } from "../AuthContext.jsx";
 
 function Expenses({ ClusterType }) {
   const [expenses, setExpenses] = useState([]);
@@ -11,6 +13,7 @@ function Expenses({ ClusterType }) {
   const [error, setError] = useState("");
   // const [selectedYear, setSelectedYear] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const { user } = useContext(AuthContext);
 
   console.log("ClusterType in Expenses:", ClusterType.title);
 
@@ -59,7 +62,8 @@ function Expenses({ ClusterType }) {
   const filteredItems = useMemo(() => {
     return expenses.filter(
       (item) =>
-        item.date.toLocaleString("default", { month: "long" }) === selectedYear
+        item.date.toLocaleString("default", { month: "long" }) ===
+          selectedYear && item.user === user
     );
   }, [expenses, selectedYear]);
 
@@ -97,6 +101,7 @@ function Expenses({ ClusterType }) {
       amount: document.getElementById("Amount").value,
       date: new Date(document.getElementById("date").value),
       cluster: ClusterType.title.trim(),
+      user: user,
     };
     setExpenses((pervExpenses) => [...pervExpenses, ExpenseData]);
     // console.log('Expense saved!');

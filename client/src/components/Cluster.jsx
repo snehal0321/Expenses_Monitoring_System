@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useContext, useEffect, useState } from "react";
 import "./Cluster.css";
 import InputModule from "./InputModel.jsx";
 import Expenses from "./Expenses.jsx";
 import ExpensesFilter from "./ExpensesFilter.jsx";
+import { AuthContext } from "../AuthContext.jsx";
 
 function Cluster({ SelectedCluster }) {
   const [showInputBox, setShowInputBox] = useState(false);
@@ -10,6 +11,7 @@ function Cluster({ SelectedCluster }) {
   const [selectedCluster, setSelectedCluster] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedYear, setSelectedYear] = useState("");
+  const { user } = useContext(AuthContext);
 
   // Fetch all clusters
   const fetchCluster = async () => {
@@ -50,7 +52,8 @@ function Cluster({ SelectedCluster }) {
 
   const filteredItems = items.filter(
     (item) =>
-      item.date.toLocaleString("default", { month: "long" }) === selectedYear
+      item.date.toLocaleString("default", { month: "long" }) === selectedYear &&
+      item.user === user
   );
 
   useEffect(() => {
@@ -76,7 +79,7 @@ function Cluster({ SelectedCluster }) {
     const title = document.getElementById("Title").value;
     const balance = document.getElementById("Balance").value;
 
-    const ExpenseData = { title, balance };
+    const ExpenseData = { title, balance, user };
 
     const response = await fetch(
       "https://expenses-monitoring-system-1.onrender.com/api/expenses/cluster/save",
