@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef, useEffect } from "react";
 import { AuthContext } from "./AuthContext"; // ✅ must match your export
 import "./Login.css";
 
 function Login() {
   const { login } = useContext(AuthContext);
+  const [open, setOpen] = React.useState(true);
 
   const handleLogin = async () => {
     const user = document.getElementById("username").value;
@@ -14,19 +15,31 @@ function Login() {
       alert("Invalid username or password");
     } else {
       alert("Login successful!");
+      setOpen(false);
     }
   };
 
+  const dialogRef = useRef(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (open) {
+      if (!dialog.open) dialog.showModal();
+    } else {
+      if (dialog.open) dialog.close();
+    }
+  }, [open]);
+
   return (
     <div className="dialog-backdrop">
-      <div className="login-module">
+      <dialog ref={dialogRef} className="login-module">
         <h2>Login</h2>
         <input id="username" type="text" placeholder="Username" />
         <br />
         <input id="password" type="password" placeholder="Password" />
         <br />
         <button onClick={handleLogin}>Login</button>
-      </div>
+      </dialog>
     </div>
   );
 }
