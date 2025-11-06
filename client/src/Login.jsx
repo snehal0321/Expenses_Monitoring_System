@@ -52,9 +52,19 @@ function Login() {
       <form onKeyDown={handleFormKeyDown} onSubmit={handleLogin}>
         <dialog ref={dialogRef} className="login-module">
           <h2>Login</h2>
-          <input id="username" type="text" placeholder="Username" />
+          <input
+            id="username"
+            autoComplete="off"
+            type="text"
+            placeholder="Username"
+          />
           <br />
-          <input id="password" type="password" placeholder="Password" />
+          <input
+            id="password"
+            type="password"
+            autoComplete="off"
+            placeholder="Password"
+          />
           <br />
           <button type="submit" id="login-button">
             Login
