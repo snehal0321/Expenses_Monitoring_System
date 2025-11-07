@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import { useEffect, useRef } from "react";
 import "./Model.css";
 
-function Model({ onClose, open, children, mode }) {
+function Model({ onClose, open, children, mode, ...props }) {
   const dialogRef = useRef(null);
 
   useEffect(() => {
@@ -14,16 +14,28 @@ function Model({ onClose, open, children, mode }) {
     }
   }, [open]);
 
+  if (props.pop) {
+    setTimeout(() => {
+      onClose();
+    }, 3000);
+  }
+
   return createPortal(
     <>
-      <div className="dialog-backdrop">
+      <div className={props.pop ? null : "dialog-backdrop"}>
         <dialog
-          className={mode === "error-root" ? "error-module" : "input-module"}
+          className={
+            props.pop
+              ? "pop-module"
+              : mode === "error-root"
+              ? "error-module"
+              : "input-module"
+          }
           ref={dialogRef}
           onClose={onClose}
         >
           {children}
-          <button onClick={onClose}>Close</button>
+          {props.pop ? null : <button onClick={onClose}>Close</button>}
         </dialog>
       </div>
     </>,

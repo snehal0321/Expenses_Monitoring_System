@@ -24,14 +24,29 @@
 }
 
 .error-module {
-  background-color: #2c003e;
-  padding: 2rem;
+  position: absolute;
+  bottom: 70%;
+  background-color: red;
   border-radius: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  width: 75%;
-  max-width: 300px;
+  /* width: 50%; */
+  /* max-width: 400px; */
   text-align: center;
   color: white;
+  font-size: 9px;
+}
+
+.pop-module {
+  position: absolute;
+  bottom: 70%;
+  background-color: #2c003e;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  width: 50%;
+  max-width: 400px;
+  text-align: center;
+  color: white;
+  font-size: 9px;
 }
 
 .input-module input {
@@ -66,6 +81,10 @@
     width: 70%;
     padding: 1rem;
   }
+  .pop-module {
+    width: 70%;
+  }
+
   .input-module input {
     width: 85%;
     font-size: 0.9rem;

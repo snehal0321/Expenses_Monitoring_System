@@ -2,20 +2,16 @@ import Expenses from "./components/Expenses.jsx";
 import "./App.css";
 import reactLogo from "./assets/FullLogo.png";
 import Cluster from "./components/Cluster.jsx";
-import { Row, Col, Space } from "antd";
-import { useState, useContext, useEffect, use } from "react";
+import { useState, useContext } from "react";
 import { AuthContext } from "./AuthContext.jsx";
-import ErrorModule from "./components/ErrorModule.jsx";
+import Modal from "./components/Modal.jsx";
 import ProfileMenu from "./components/ProfileMenu.jsx";
 
 function App() {
   const [cluster, setCluster] = useState({});
   const [clusterSelected, setClusterSelected] = useState(false);
   const { user } = useContext(AuthContext);
-
-  useEffect(() => {
-    user && alert(`Welcome ${user}, you have successfully logged in!`);
-  }, [user]);
+  const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
 
   function handleSelectedCluster(clusterType) {
     setCluster(clusterType);
@@ -32,6 +28,15 @@ function App() {
 
   return (
     <>
+      <Modal
+        onClose={() => setShowWelcomeMessage(false)}
+        open={showWelcomeMessage}
+        mode={"error-root"}
+        pop={true}
+      >
+        <p>Welcome {user}, you have successfully logged in!</p>
+      </Modal>
+
       <div className="app-header">
         <img src={reactLogo} alt="React Logo" className="logo" width="100" />
         <ProfileMenu />
