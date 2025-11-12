@@ -17,7 +17,7 @@ function Model({ onClose, open, children, mode, ...props }) {
   if (props.pop) {
     setTimeout(() => {
       onClose();
-    }, 2000);
+    }, 1500);
   }
 
   return createPortal(
