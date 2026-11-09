@@ -55,16 +55,62 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.cluster-item button {
+.cluster-item-addbutton {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #111827;
+  border: 1px solid lightgray;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.cluster-item-deletebutton {
   all: unset;
   display: inline-block;
-  background-color: black;
+  border: 1px solid lightgray;
   border-radius: var(--radius);
   padding: 0px 10px;
   margin: 5px;
   cursor: pointer;
   transition: background 160ms ease, color 160ms ease, transform 160ms ease,
     box-shadow 160ms ease;
+}
+
+/* Hover/focus */
+.cluster-item-deletebutton:hover,
+.cluster-item-deletebutton:focus {
+  background-color: black;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(2, 6, 23, 0.06);
+  outline: none;
+}
+
+/* Active/highlighted option */
+.cluster-item-deletebutton.active {
+  background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+  color: #fff;
+  box-shadow: 0 8px 26px rgba(79, 70, 229, 0.18);
+  transform: translateY(0);
+}
+
+
+/* Hover/focus */
+.cluster-item-addbutton:hover,
+.cluster-item-addbutton:focus {
+  background: rgba(0, 0, 0, 0.04);
+  background-color: black;
+  color: White;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(2, 6, 23, 0.06);
+  font-size: 30px;
+  outline: none;
 }
 
 /* Hover/focus */
@@ -107,6 +153,16 @@
     padding: 12px;
   }
   .cluster-item button {
+    width: 60%;
+    padding: 0px 5px;
+    text-align: center;
+  }
+  .cluster-item-addbutton  {
+    width: 60%;
+    padding: 0px 5px;
+    text-align: center;
+  }
+  .cluster-item-deletebutton  {
     width: 60%;
     padding: 0px 5px;
     text-align: center;

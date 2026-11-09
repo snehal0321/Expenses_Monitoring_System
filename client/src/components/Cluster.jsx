@@ -95,6 +95,33 @@ function Cluster({ SelectedCluster }) {
     fetchCluster();
   }
 
+  async function handleDelete(id) {
+    try {
+      const response = await fetch(
+        `https://expenses-monitoring-system-1.onrender.com/api/expenses/cluster/${id}`,
+        {
+          method: "DELETE", // ✅ correct method
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete expense");
+      }
+
+      const data = await response.json();
+
+      // ✅ Refresh the list after delete
+      fetchExpenses();
+
+      return data;
+    } catch (error) {
+      console.error("Error deleting expense:", error);
+    }
+  }
+
   if (isLoading) return <div>Loading clusters...</div>;
 
   return (
@@ -132,10 +159,15 @@ function Cluster({ SelectedCluster }) {
                 onClick={() => handleClusterClick(clusterItem)}
               >
                 {clusterItem.title}
+                <button
+                  className="cluster-item-deletebutton"
+                  onClick={() =>{ 
+                  handleDelete(clusterItem._id)
+                }}>X</button>
               </li>
             ))}
             <li className="cluster-item" onClick={() => setShowInputBox(true)}>
-              <button>+</button>
+              <button className="cluster-item-addbutton">+</button>
             </li>
           </ul>
         </nav>
